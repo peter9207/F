@@ -9,13 +9,29 @@ import (
 
 var _ = Describe("Average", func() {
 
-	data := []int64{1, 2, 3, 4, 5}
+	data := []int64{1, 2, 1, 2, 1, 2}
 
 	Describe("Sum", func() {
 
 		result := Sum(data)
 		It("Should compute the sum", func() {
-			Ω(result).Should(Equal(int64(15)))
+			Ω(result).Should(Equal(int64(9)))
+		})
+
+	})
+
+	Describe("Rolling average", func() {
+
+		averages := Rolling(data, 2)
+
+		It("should have a length equal to data", func() {
+			Ω(len(averages)).Should(Equal(6))
+		})
+
+		It("should have correct values", func() {
+			for _, v := range averages {
+				Ω(v).Should(Equal(1.5))
+			}
 		})
 
 	})
