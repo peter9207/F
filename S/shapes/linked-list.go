@@ -11,13 +11,13 @@ type Node struct {
 }
 
 func NewLinkedList() (l *LinkedList) {
-	return LinkedList{}
+	return &LinkedList{}
 }
 
 func (l *LinkedList) AddFirst(val int64) {
 
 	node := Node{val: val, next: l.head}
-	l.head = node
+	l.head = &node
 
 }
 
