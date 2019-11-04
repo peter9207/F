@@ -21,7 +21,6 @@ func Sum(input []int64) (sum int64) {
 func Rolling(input []int64, size int64) (averages []int64) {
 
 	linkedList := shapes.NewLinkedList()
-
 	bucketSum := Sum(input[:size])
 
 	for i := range size {
@@ -38,6 +37,9 @@ func Rolling(input []int64, size int64) (averages []int64) {
 
 		average = bucketSum / size
 
+		averages = append(averages, average)
+
 	}
 
+	return
 }
