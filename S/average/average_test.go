@@ -29,9 +29,11 @@ var _ = Describe("Average", func() {
 		})
 
 		It("should have correct values", func() {
-			for _, v := range averages {
-				Ω(v).Should(Equal(1.5))
-			}
+			Ω(averages[0]).Should(Equal(float64(1)))
+			Ω(averages[1]).Should(Equal(1.5))
+			Ω(averages[2]).Should(Equal(1.5))
+			Ω(averages[3]).Should(Equal(1.5))
+			Ω(averages[4]).Should(Equal(1.5))
 		})
 
 	})

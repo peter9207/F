@@ -25,23 +25,24 @@ func Sum(input []int64) (sum int64) {
 func Rolling(input []int64, size int64) (averages []float64) {
 
 	linkedList := shapes.NewLinkedList()
-	bucketSum := Sum(input[:size])
+	bucketSum := int64(0)
 
-	for i := 0; int64(i) < size; i++ {
-		linkedList.AddFirst(input[i])
-	}
+	count := int64(0)
 
-	for i := int(size); i < len(input); i++ {
+	for _, v := range input {
+		bucketSum = bucketSum + v
 
-		val := input[i]
-		old := linkedList.RemoveFirst()
+		linkedList.AddFirst(v)
 
-		fmt.Println(old)
+		count = count + 1
+		if count > size {
+			old := linkedList.RemoveFirst()
+			bucketSum = bucketSum - old
+			count = count - 1
+		}
 
-		bucketSum = bucketSum - old
-		bucketSum = bucketSum + val
-
-		average := float64(bucketSum) / float64(size)
+		average := float64(bucketSum) / float64(count)
+		fmt.Printf("average: %f", average)
 		averages = append(averages, average)
 
 	}

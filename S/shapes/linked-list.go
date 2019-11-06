@@ -1,8 +1,9 @@
 package shapes
 
 type LinkedList struct {
-	head *Node
-	tail *Node
+	Length int64
+	head   *Node
+	tail   *Node
 }
 
 type Node struct {
@@ -16,17 +17,18 @@ func NewLinkedList() (l *LinkedList) {
 
 func (l *LinkedList) AddFirst(val int64) {
 
+	l.Length = l.Length + 1
 	node := Node{val: val, next: l.head}
 	l.head = &node
 
 }
 
 func (l *LinkedList) AddLast(val int64) {
+	l.Length = l.Length + 1
 
 	node := Node{val: val, next: nil}
 	l.tail.next = &node
 	l.tail = &node
-
 }
 
 func (l *LinkedList) isEmpty() bool {
@@ -35,6 +37,7 @@ func (l *LinkedList) isEmpty() bool {
 
 func (l *LinkedList) RemoveFirst() (result int64) {
 
+	l.Length = l.Length - 1
 	result = l.head.val
 	l.head = l.head.next
 	return
