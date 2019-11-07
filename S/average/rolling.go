@@ -6,14 +6,14 @@ import (
 	"github.com/peter9207/F/S/shapes"
 )
 
-func Simple(input []int64) (mean float64) {
+func Simple(input []float64) (mean float64) {
 
 	sum := Sum(input)
 	mean = float64(sum) / float64(len(input))
 	return
 }
 
-func Sum(input []int64) (sum int64) {
+func Sum(input []float64) (sum float64) {
 
 	for _, v := range input {
 		sum += v
@@ -22,12 +22,12 @@ func Sum(input []int64) (sum int64) {
 
 }
 
-func Rolling(input []int64, size int64) (averages []float64) {
+func Rolling(input []float64, size float64) (averages []float64) {
 
 	linkedList := shapes.NewLinkedList()
-	bucketSum := int64(0)
+	bucketSum := float64(0)
 
-	count := int64(0)
+	count := float64(0)
 
 	for _, v := range input {
 		bucketSum = bucketSum + v

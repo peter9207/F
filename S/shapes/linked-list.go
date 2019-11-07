@@ -7,7 +7,7 @@ type LinkedList struct {
 }
 
 type Node struct {
-	val  int64
+	val  float64
 	next *Node
 }
 
@@ -15,7 +15,7 @@ func NewLinkedList() (l *LinkedList) {
 	return &LinkedList{}
 }
 
-func (l *LinkedList) AddFirst(val int64) {
+func (l *LinkedList) AddFirst(val float64) {
 
 	l.Length = l.Length + 1
 	node := Node{val: val, next: l.head}
@@ -23,7 +23,7 @@ func (l *LinkedList) AddFirst(val int64) {
 
 }
 
-func (l *LinkedList) AddLast(val int64) {
+func (l *LinkedList) AddLast(val float64) {
 	l.Length = l.Length + 1
 
 	node := Node{val: val, next: nil}
@@ -35,7 +35,7 @@ func (l *LinkedList) isEmpty() bool {
 	return l.head == nil
 }
 
-func (l *LinkedList) RemoveFirst() (result int64) {
+func (l *LinkedList) RemoveFirst() (result float64) {
 
 	l.Length = l.Length - 1
 	result = l.head.val
