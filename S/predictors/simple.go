@@ -1,0 +1,5 @@
+package predictors
+
+func Simple() {
+
+}
