@@ -10,7 +10,52 @@ import (
 	"strconv"
 )
 
+type Stock struct {
+	Date     string
+	Open     float64
+	High     float64
+	Low      float64
+	Close    float64
+	AdjClose float64
+	Volume   int64
+}
+
+func readExport(filename string) (stocks []Stock, err error) {
+
+	f, _ := os.Open(filename)
+	reader := csv.NewReader(bufio.NewReader(f))
+	first := true
+	for {
+		var line []string
+		line, err = reader.Read()
+		if err == io.EOF {
+			return stocks, nil
+		} else if err != nil {
+			log.Fatal(err)
+			return
+		}
+		if first {
+			first = false
+			continue
+		}
+
+		stocks = append(stocks, Stock{
+			Date:     line[0],
+			Open:     parseFloat(line[1]),
+			High:     parseFloat(line[2]),
+			Low:      parseFloat(line[3]),
+			Close:    parseFloat(line[4]),
+			AdjClose: parseFloat(line[5]),
+			Volume:   parseInt(line[6]),
+		})
+
+		log.Printf("row read: %v", line)
+	}
+
+}
+
 func parseFloat(s string) (f float64) {
+	log.Printf("trying to parse %s", s)
 	var err error
 	if f, err = strconv.ParseFloat(s, 64); err != nil {
 		panic(err)
@@ -26,61 +71,37 @@ func parseInt(s string) (i int64) {
 	return
 }
 
-type Stock struct {
-	Date     string
-	Open     float64
-	High     float64
-	Low      float64
-	Close    float64
-	AdjClose float64
-	Volume   int64
-}
-
-var rootCmd = &cobra.Command{
-	Use:   "S",
-	Short: "my feeble attempt to figure out what stocks to buy",
-	Long: `A Fast and Flexible Static Site Generator built with
-                love by spf13 and friends in Go.
-                Complete documentation is available at http://hugo.spf13.com`,
+var simpleCmd = &cobra.Command{
+	Use:   "simple",
+	Short: "a simple rolling average calculation",
+	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Printf("input %d", len(args))
 
-		if len(args) < 2 {
+		if len(args) < 1 {
 			cmd.Help()
 			return
 		}
 
 		csvFile := args[0]
+		stocks, err := readExport(csvFile)
 
-		f, _ := os.Open(csvFile)
-
-		data := []Stock{}
-
-		reader := csv.NewReader(bufio.NewReader(f))
-		for {
-			line, err := reader.Read()
-			if err == io.EOF {
-				return
-			} else if err != nil {
-				log.Fatal(err)
-				return
-			}
-
-			data = append(data, Stock{
-				Date:     line[0],
-				Open:     parseFloat(line[1]),
-				High:     parseFloat(line[2]),
-				Low:      parseFloat(line[3]),
-				Close:    parseFloat(line[4]),
-				AdjClose: parseFloat(line[5]),
-				Volume:   parseInt(line[6]),
-			})
-
-			log.Printf("row read: %v", line)
+		if err != nil {
+			return
 		}
+
+		_ = stocks
 
 	},
 }
 
+var rootCmd = &cobra.Command{
+	Use:   "S",
+	Short: "an attempt to try various means of analysing stocks data",
+}
+
 func main() {
+
+	rootCmd.AddCommand(simpleCmd)
 	rootCmd.Execute()
 }
