@@ -1,8 +1,6 @@
 package average
 
 import (
-	"fmt"
-
 	"github.com/peter9207/F/S/shapes"
 )
 
@@ -42,7 +40,6 @@ func Rolling(input []float64, size float64) (averages []float64) {
 		}
 
 		average := float64(bucketSum) / float64(count)
-		fmt.Printf("average: %f", average)
 		averages = append(averages, average)
 
 	}

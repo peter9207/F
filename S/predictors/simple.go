@@ -16,6 +16,6 @@ func (p *Predictor) Predict(data []float64) (b bool) {
 
 	averages := average.Rolling(data, 7)
 
-	b = averages[0] < averages[len(averages)]
+	b = averages[0] < averages[len(averages)-1]
 	return
 }

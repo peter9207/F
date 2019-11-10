@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/csv"
+	"github.com/peter9207/F/S/predictors"
 	"github.com/spf13/cobra"
 	"io"
 	"log"
@@ -48,14 +49,12 @@ func readExport(filename string) (stocks []Stock, err error) {
 			AdjClose: parseFloat(line[5]),
 			Volume:   parseInt(line[6]),
 		})
-
-		log.Printf("row read: %v", line)
 	}
 
 }
 
 func parseFloat(s string) (f float64) {
-	log.Printf("trying to parse %s", s)
+	// log.Printf("trying to parse %s", s)
 	var err error
 	if f, err = strconv.ParseFloat(s, 64); err != nil {
 		panic(err)
@@ -76,8 +75,6 @@ var simpleCmd = &cobra.Command{
 	Short: "a simple rolling average calculation",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Printf("input %d", len(args))
-
 		if len(args) < 1 {
 			cmd.Help()
 			return
@@ -87,11 +84,20 @@ var simpleCmd = &cobra.Command{
 		stocks, err := readExport(csvFile)
 
 		if err != nil {
+			log.Fatal(err)
 			return
 		}
 
-		_ = stocks
+		data := []float64{}
+		for _, v := range stocks {
+			data = append(data, v.Close)
+		}
 
+		p := predictors.Simple()
+		result := p.Predict(data)
+
+		log.Printf("result: %v", result)
+		return
 	},
 }
 
