@@ -20,7 +20,7 @@ func Sum(input []float64) (sum float64) {
 
 }
 
-func Rolling(input []float64, size float64) (averages []float64) {
+func Rolling(input []float64, size int64) (averages []float64) {
 
 	linkedList := shapes.NewLinkedList()
 	bucketSum := float64(0)
@@ -33,7 +33,7 @@ func Rolling(input []float64, size float64) (averages []float64) {
 		linkedList.AddFirst(v)
 
 		count = count + 1
-		if count > size {
+		if count > float64(size) {
 			old := linkedList.RemoveFirst()
 			bucketSum = bucketSum - old
 			count = count - 1

@@ -93,7 +93,7 @@ var simpleCmd = &cobra.Command{
 			data = append(data, v.Close)
 		}
 
-		p := predictors.Simple()
+		p := predictors.SimpleRolling(10)
 		result := p.Predict(data)
 
 		log.Printf("result: %v", result)
