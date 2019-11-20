@@ -5,7 +5,7 @@ import (
 )
 
 type Predictor interface {
-	Predict(data []float64) bool
+	Predict(data []float64) float64
 }
 
 type SimplePredictor struct {
@@ -17,10 +17,9 @@ func SimpleRolling(bucketSize int64) (p *SimplePredictor) {
 	return &SimplePredictor{windowSize: bucketSize}
 }
 
-func (p *SimplePredictor) Predict(data []float64) (b bool) {
+func (p *SimplePredictor) Predict(data []float64) (b float64) {
 
 	averages := average.Rolling(data, p.windowSize)
-
-	b = averages[0] < averages[len(averages)-1]
+	b = averages[len(averages)-1] - averages[0]
 	return
 }
