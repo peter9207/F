@@ -2,7 +2,6 @@ package main
 
 import "path/filepath"
 import "github.com/peter9207/F/W/parser"
-import "fmt"
 import "os"
 
 func isJS(path string) bool {
@@ -39,11 +38,11 @@ func parsePrograms(root string) (err error) {
 	}
 
 	for _, v := range paths {
-		program, err := parser.Parse(v)
+		err := parser.Parse(v)
 		if err != nil {
 			return err
 		}
 
-		fmt.Println(string(program))
 	}
+	return
 }

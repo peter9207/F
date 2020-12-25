@@ -16,7 +16,7 @@ var rootCmd = &cobra.Command{
 		}
 		rootDir := args[0]
 
-		if err := parseProgram(rootDir); err != nil {
+		if err := parsePrograms(rootDir); err != nil {
 			panic(err)
 		}
 
