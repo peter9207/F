@@ -1,43 +1,43 @@
 package parser
 
 import "github.com/tdewolff/parse/v2/js"
-
 import "github.com/tdewolff/parse/v2"
 import "os"
 import "fmt"
+import "encoding/json"
 
-func Parse(filename string) (err error) {
+func Parse(filename string) (ast *js.AST, err error) {
 	reader, err := os.Open(filename)
 	if err != nil {
 		return
 	}
 
-	p, err := js.Parse(parse.NewInput(reader))
-	// ast, err := js.Parse(parse.NewInputString("if (state == 5) { console.log('In state five'); }"))
+	ast, err = js.Parse(parse.NewInput(reader))
+	return
+}
+
+func traverseAST(ast *js.AST) (err error) {
+
+	fmt.Println("starting ast traverse")
+
+	data, err := json.Marshal(ast)
 	if err != nil {
 		return
 	}
 
-	fmt.Println(p)
+	fmt.Println(string(data))
 
-	// for {
-	// 	tt, text := lex.Next()
-	// 	switch tt {
-	// 	case js.ErrorToken:
-	// 		if lex.Err() != io.EOF {
-	// 			fmt.Println("Error on line", text, ":", lex.Err())
-	// 			return lex.Err()
-	// 		}
-	// 		fmt.Println("finished")
-	// 		return
-	// 	case js.IdentifierToken:
-	// 		fmt.Println("Identifier", string(text))
-	// 	case js.NumericToken:
-	// 		fmt.Println("Numeric", string(text))
-	// 	default:
-	// 		fmt.Printf("default : %s :  %T  \n", text, tt)
-	// 	}
+	fmt.Println("finished")
+	return
+}
 
-	// }
+func CreateTree(filename string) (err error) {
+
+	ast, err := Parse(filename)
+	if err != nil {
+		return
+	}
+
+	err = traverseAST(ast)
 	return
 }

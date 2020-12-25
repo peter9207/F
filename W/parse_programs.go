@@ -38,11 +38,10 @@ func parsePrograms(root string) (err error) {
 	}
 
 	for _, v := range paths {
-		err := parser.Parse(v)
+		err := parser.CreateTree(v)
 		if err != nil {
 			return err
 		}
-
 	}
 	return
 }
