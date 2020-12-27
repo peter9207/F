@@ -5,16 +5,19 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	// "reflect"
 	"strings"
 )
 
-const parserURL = "localhost:3000/parse"
+const parserURL = "http://localhost:3000/parse"
 
-type Node map[string]interface{}
+// type Node map[string]interface{}
 
 func analyze(astString string) (err error) {
 
-	jsonMap := Node{}
+	// fmt.Println("stuffs")
+
+	jsonMap := make(map[string]interface{})
 	err = json.Unmarshal([]byte(astString), &jsonMap)
 	if err != nil {
 		return
@@ -26,12 +29,16 @@ func analyze(astString string) (err error) {
 }
 
 func Depth(root interface{}) (n int) {
+
+	// fmt.Println("root type", reflect.TypeOf(root))
+
 	m, ok := root.(map[string]interface{})
 	if !ok {
+		// fmt.Println("default return")
 		return 1
 	}
 
-	currentMax := 1
+	currentMax := 0
 	for _, v := range m {
 
 		switch v.(type) {

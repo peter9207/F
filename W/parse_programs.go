@@ -1,7 +1,6 @@
 package main
 
 import "path/filepath"
-import "github.com/peter9207/F/W/parser"
 import "github.com/peter9207/F/W/javascript"
 import "os"
 import "io/ioutil"
@@ -42,14 +41,13 @@ func parsePrograms(root string) (err error) {
 	for _, v := range paths {
 		file, err := ioutil.ReadFile(v)
 		if err != nil {
-			return
+			return err
 		}
 
-		javascript.Parse(file)
-		// err := parser.CreateTree(v)
-		// if err != nil {
-		// 	return err
-		// }
+		err = javascript.Parse(string(file))
+		if err != nil {
+			return err
+		}
 	}
 	return
 }
