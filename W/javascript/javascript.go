@@ -26,12 +26,12 @@ func analyze(astString string) (err error) {
 }
 
 func Depth(root interface{}) (n int) {
-
-	var currentMax int
 	m, ok := root.(map[string]interface{})
 	if !ok {
 		return 1
 	}
+
+	currentMax := 1
 	for _, v := range m {
 
 		switch v.(type) {
@@ -56,7 +56,7 @@ func Depth(root interface{}) (n int) {
 		}
 	}
 
-	n = currentMax
+	n = currentMax + 1
 
 	return
 

@@ -20,6 +20,26 @@ var _ = Describe("Javascript", func() {
 			})
 		})
 
+		When("root is a array", func() {
+
+			root := []int{5, 2, 3}
+			It("returns 1", func() {
+				result := javascript.Depth(root)
+				Expect(result).Should(Equal(1))
+			})
+		})
+
+		When("root is a 2 layer object", func() {
+
+			root := map[string]interface{}{
+				"layer1": []int{1, 2, 3},
+			}
+			It("returns 2", func() {
+				result := javascript.Depth(root)
+				Expect(result).Should(Equal(2))
+			})
+		})
+
 	})
 
 })
