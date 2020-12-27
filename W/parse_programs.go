@@ -2,7 +2,9 @@ package main
 
 import "path/filepath"
 import "github.com/peter9207/F/W/parser"
+import "github.com/peter9207/F/W/javascript"
 import "os"
+import "io/ioutil"
 
 func isJS(path string) bool {
 	return filepath.Ext(path) == ".js"
@@ -38,10 +40,16 @@ func parsePrograms(root string) (err error) {
 	}
 
 	for _, v := range paths {
-		err := parser.CreateTree(v)
+		file, err := ioutil.ReadFile(v)
 		if err != nil {
-			return err
+			return
 		}
+
+		javascript.Parse(file)
+		// err := parser.CreateTree(v)
+		// if err != nil {
+		// 	return err
+		// }
 	}
 	return
 }
