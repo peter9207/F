@@ -54,7 +54,6 @@ func readExport(filename string) (stocks []Stock, err error) {
 }
 
 func parseFloat(s string) (f float64) {
-	// log.Printf("trying to parse %s", s)
 	var err error
 	if f, err = strconv.ParseFloat(s, 64); err != nil {
 		panic(err)
@@ -71,12 +70,15 @@ func parseInt(s string) (i int64) {
 }
 
 var simpleCmd = &cobra.Command{
-	Use:   "simple",
+	Use:   "simple <filename>",
 	Short: "a simple rolling average calculation",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) < 1 {
-			cmd.Help()
+			err := cmd.Help()
+			if err != nil {
+				panic(err)
+			}
 			return
 		}
 
@@ -94,10 +96,9 @@ var simpleCmd = &cobra.Command{
 		}
 
 		p := predictors.SimpleRolling(10)
-		result := p.Predict(data)
+		result := p.POI(data)
 
 		log.Printf("result: %v", result)
-		return
 	},
 }
 
