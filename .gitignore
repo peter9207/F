@@ -7,6 +7,10 @@
 
 W
 !W/
+S
+!S/
+
+data/
 
 # Test binary, build with `go test -c`
 *.test
