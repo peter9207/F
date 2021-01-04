@@ -102,6 +102,32 @@ var simpleCmd = &cobra.Command{
 	},
 }
 
+var esCmd = &cobra.Command{
+	Use:   "es ",
+	Short: "test es is connected",
+	Long:  ``,
+	Run: func(cmd *cobra.Command, args []string) {
+
+		client, err := connectES()
+		if err != nil {
+			panic(err)
+		}
+		res, err := client.Info()
+		if err != nil {
+			return
+		}
+
+		defer res.Body.Close()
+		log.Println(res)
+
+	},
+}
+
+var testCmd = &cobra.Command{
+	Use:   "test",
+	Short: "test various dependencies",
+}
+
 var rootCmd = &cobra.Command{
 	Use:   "S",
 	Short: "an attempt to try various means of analysing stocks data",
@@ -109,6 +135,9 @@ var rootCmd = &cobra.Command{
 
 func main() {
 
+	testCmd.AddCommand(esCmd)
+
 	rootCmd.AddCommand(simpleCmd)
+	rootCmd.AddCommand(testCmd)
 	rootCmd.Execute()
 }
