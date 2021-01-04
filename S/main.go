@@ -3,12 +3,14 @@ package main
 import (
 	"bufio"
 	"encoding/csv"
+	"fmt"
 	"github.com/peter9207/F/S/predictors"
 	"github.com/spf13/cobra"
 	"io"
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
 type Stock struct {
@@ -95,8 +97,40 @@ var simpleCmd = &cobra.Command{
 			data = append(data, v.Close)
 		}
 
+		producer, err := NewEventProducer()
+		if err != nil {
+			panic(err)
+		}
+
 		p := predictors.SimpleRolling(10)
 		result := p.POI(data)
+
+		format := "2006-01-02"
+
+		for _, v := range result {
+
+			date := stocks[v.Index].Date
+
+			t, err := time.Parse(format, date)
+			if err != nil {
+				fmt.Println("error parsing date", date)
+				continue
+			}
+
+			event := RollingWindowCrossingEvent{
+				Value:      v.Value,
+				Window:     10,
+				Meta:       "",
+				Increasing: v.Increasing,
+				Date:       t.Unix(),
+			}
+
+			err = producer.produceEvent(event)
+			if err != nil {
+				fmt.Println("error producing", err)
+			}
+
+		}
 
 		log.Printf("result: %v", result)
 	},
@@ -136,7 +170,6 @@ var rootCmd = &cobra.Command{
 func main() {
 
 	testCmd.AddCommand(esCmd)
-
 	rootCmd.AddCommand(simpleCmd)
 	rootCmd.AddCommand(testCmd)
 	rootCmd.Execute()
