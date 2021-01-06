@@ -1,5 +1,9 @@
 package shapes
 
+import (
+	"fmt"
+)
+
 type LinkedList struct {
 	Length int64
 	head   *Node
@@ -31,7 +35,7 @@ func (l *LinkedList) AddLast(val float64) {
 	l.tail = &node
 }
 
-func (l *LinkedList) isEmpty() bool {
+func (l *LinkedList) IsEmpty() bool {
 	return l.head == nil
 }
 
@@ -40,5 +44,20 @@ func (l *LinkedList) RemoveFirst() (result float64) {
 	l.Length = l.Length - 1
 	result = l.head.val
 	l.head = l.head.next
+	return
+}
+
+func (l *LinkedList) String() (s string) {
+
+	values := []string{}
+
+	node := l.head
+
+	for node != nil {
+		values = append(values, fmt.Sprintf("%v", node.val))
+		node = node.next
+	}
+
+	s = fmt.Sprintf("%v", values)
 	return
 }
