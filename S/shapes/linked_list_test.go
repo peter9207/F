@@ -4,7 +4,6 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"fmt"
 	"github.com/peter9207/F/S/shapes"
 )
 
@@ -45,7 +44,6 @@ var _ = Describe("LinkedList", func() {
 			list.AddLast(5)
 			It("should return 2", func() {
 				actual := list.RemoveFirst()
-				fmt.Println("ELE:", actual)
 				Ω(actual).Should(Equal(float64(2)))
 			})
 		})
