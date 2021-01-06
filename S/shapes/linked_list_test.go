@@ -4,6 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
+	"fmt"
 	"github.com/peter9207/F/S/shapes"
 )
 
@@ -25,17 +26,29 @@ var _ = Describe("LinkedList", func() {
 	})
 
 	Describe("adding and removing", func() {
-		list := shapes.NewLinkedList()
-		list.AddFirst(1)
-		list.AddFirst(2)
 
 		Describe("Rmoeve First", func() {
+			list := shapes.NewLinkedList()
+			list.AddFirst(1)
+			list.AddFirst(2)
 			It("should return 2", func() {
 				actual := list.RemoveFirst()
+				Ω(list.Length()).Should(Equal(int64(1)))
 				Ω(actual).Should(Equal(float64(2)))
 			})
 		})
 
+		Describe("Rmoeve Last", func() {
+			list := shapes.NewLinkedList()
+			list.AddFirst(1)
+			list.AddFirst(2)
+			list.AddLast(5)
+			It("should return 2", func() {
+				actual := list.RemoveFirst()
+				fmt.Println("ELE:", actual)
+				Ω(actual).Should(Equal(float64(2)))
+			})
+		})
 	})
 
 })

@@ -28,7 +28,7 @@ func Box(data []float64, size int) (filtered []float64) {
 		if int(i+size) < len(data) {
 			// fmt.Println("adding stuff to LL", v)
 			bucketSum = bucketSum + v
-			linkedList.AddFirst(v)
+			linkedList.AddLast(v)
 			count = count + 1
 		}
 
