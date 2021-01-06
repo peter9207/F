@@ -9,13 +9,13 @@ import (
 
 var _ = Describe("Average", func() {
 
-	data := []int64{1, 2, 1, 2, 1, 2}
+	data := []float64{1, 2, 1, 2, 1, 2}
 
 	Describe("Sum", func() {
 
 		result := Sum(data)
 		It("Should compute the sum", func() {
-			Ω(result).Should(Equal(int64(9)))
+			Ω(result).Should(Equal(float64(9)))
 		})
 
 	})
