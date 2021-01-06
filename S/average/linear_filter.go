@@ -25,6 +25,8 @@ func Box(data []float64, size int) (filtered []float64) {
 
 	for i, v := range data {
 
+		fmt.Println("on: ", v)
+
 		if int(i+size) < len(data) {
 			// fmt.Println("adding stuff to LL", v)
 			bucketSum = bucketSum + v
@@ -32,16 +34,16 @@ func Box(data []float64, size int) (filtered []float64) {
 			count = count + 1
 		}
 
-		fmt.Printf("size: %v current count: %v\n", size, count)
+		// fmt.Printf("size: %v current count: %v\n", size, count)
 		if count > float64(size) {
 
 			old := linkedList.RemoveFirst()
-			fmt.Println("removing things from list", old)
+			// fmt.Println("removing things from list", old)
 			bucketSum = bucketSum - old
 			count = count - 1
 		}
 
-		fmt.Println("bucket", linkedList)
+		// fmt.Println("bucket", linkedList)
 
 		average := float64(bucketSum) / float64(count)
 		// fmt.Println("adding value", average)

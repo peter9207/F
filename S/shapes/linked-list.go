@@ -31,16 +31,18 @@ func (l *LinkedList) AddFirst(val float64) {
 
 	l.length = l.length + 1
 	l.head = &node
-
 }
 
 func (l *LinkedList) AddLast(val float64) {
-
 	node := Node{val: val, next: nil}
 
 	if l.length == 0 {
+		l.length = l.length + 1
 		l.head = &node
+		l.tail = &node
+		return
 	}
+
 	l.length = l.length + 1
 
 	l.tail.next = &node

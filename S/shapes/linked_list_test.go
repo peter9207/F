@@ -25,6 +25,16 @@ var _ = Describe("LinkedList", func() {
 	})
 
 	Describe("adding and removing", func() {
+		Describe("add Last", func() {
+			list := shapes.NewLinkedList()
+			list.AddLast(5)
+			It("should return 2", func() {
+
+				Ω(list.Length()).Should(Equal(int64(1)))
+				actual := list.RemoveFirst()
+				Ω(actual).Should(Equal(float64(5)))
+			})
+		})
 
 		Describe("Rmoeve First", func() {
 			list := shapes.NewLinkedList()
