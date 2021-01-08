@@ -1,5 +1,14 @@
 version: '2.2'
 services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
     container_name: es01

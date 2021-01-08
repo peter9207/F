@@ -172,5 +172,9 @@ func main() {
 	testCmd.AddCommand(esCmd)
 	rootCmd.AddCommand(simpleCmd)
 	rootCmd.AddCommand(testCmd)
+
+	rootCmd.AddCommand(groupCmd)
+	groupCmd.AddCommand(groupMaxCmd)
+
 	rootCmd.Execute()
 }
