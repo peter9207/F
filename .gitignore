@@ -9,7 +9,10 @@ W
 !W/
 S
 !S/
+migrations
+!migrations/
 
+pg_data/
 data/
 
 # Test binary, build with `go test -c`
